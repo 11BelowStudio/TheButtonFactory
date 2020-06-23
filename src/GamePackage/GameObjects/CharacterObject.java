@@ -29,6 +29,13 @@ public abstract class CharacterObject extends GameObject {
     }
 
     @Override
+    public CharacterObject revive(Vector2D p, Vector2D v){
+        super.revive(p,v);
+        direction = Vector2D.polar(UP_RADIANS,1);
+        return this;
+    }
+
+    @Override
     void individualUpdate() {
         wordCountdown();
         individualCharacterUpdate();

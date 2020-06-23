@@ -36,6 +36,7 @@ public abstract class GameObject {
     static final int PLAYER_MAX_SPEED = 250;
 
     static final double UP_RADIANS = Math.toRadians(270);
+    static final double LEFT_RADIANS = Math.toRadians(0);
 
     //safety orange: #e97600
     static final Color SAFETY_ORANGE = new Color(233, 118, 0);

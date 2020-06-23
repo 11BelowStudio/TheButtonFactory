@@ -18,6 +18,15 @@ public class BossObject extends CharacterObject {
         super(new Vector2D(HALF_WIDTH, QUARTER_HEIGHT), new Vector2D());
         objectColour = SAFETY_PURPLE;
         img = BOSS;
+        alive = false;
+    }
+
+    public void heAppears(){
+        alive = true;
+    }
+
+    public void heGone(){
+        alive = false;
     }
 
     @Override

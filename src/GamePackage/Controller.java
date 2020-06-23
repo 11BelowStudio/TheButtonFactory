@@ -12,6 +12,8 @@ public class Controller implements KeyListener, MouseListener {
 
     public Action getAction() { return action; }
 
+    public void noAction() {action.noAction();}
+
     @Override
     public void keyTyped(KeyEvent e) { }
 

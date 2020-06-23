@@ -29,6 +29,13 @@ public class PlayerObject extends CharacterObject {
         this.objectColour = SAFETY_ORANGE;
     }
 
+    public PlayerObject revive(){
+        super.revive(new Vector2D(HALF_WIDTH, HALF_HEIGHT),
+                new Vector2D());
+        ctrl.noAction();
+        return this;
+    }
+
     @Override
     void individualCharacterUpdate() {
         Action currentAction = ctrl.getAction();

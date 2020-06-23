@@ -6,22 +6,26 @@ import utilities.HighScoreHandler;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 import static GamePackage.Constants.GAME_HEIGHT;
 import static GamePackage.Constants.GAME_WIDTH;
 
 public abstract class Model {
 
-    List<StringObject> hudObjects;
-    List<CharacterObject> characterObjects;
-    List<ButtonObject> buttonObjects;
-    List<BackgroundRippleObject> backgroundObjects;
+    final List<StringObject> hudObjects;
+    final List<CharacterObject> characterObjects;
+    final List<ButtonObject> buttonObjects;
+    final List<BackgroundRippleObject> backgroundObjects;
 
 
-    List<StringObject> aliveHUD;
-    List<CharacterObject> aliveCharacters;
-    List<ButtonObject> aliveButtonObjects;
-    List<BackgroundRippleObject> aliveBackground;
+    final List<StringObject> aliveHUD;
+    final List<CharacterObject> aliveCharacters;
+    final List<ButtonObject> aliveButtonObjects;
+    final List<BackgroundRippleObject> aliveBackground;
+
+
+    final Stack<BackgroundRippleObject> ripples;
 
 
 
@@ -69,6 +73,8 @@ public abstract class Model {
         aliveCharacters = new ArrayList<>();
         aliveButtonObjects = new ArrayList<>();
         aliveBackground = new ArrayList<>();
+
+        ripples = new Stack<>();
 
 
         gameOver = false;
@@ -126,20 +132,39 @@ public abstract class Model {
     void endThis(){
         stopThat = true;
 
-        aliveHUD.clear();
-        aliveCharacters.clear();
-        aliveButtonObjects.clear();
-        aliveBackground.clear();
-        refreshLists();
+        clearCollections();
     }
 
-    public abstract Model revive();
+    public Model revive(){
+        this.gameOver = false;
+        this.stopThat = false;
+        setupModel();
+        return this;
+    }
 
-    abstract public void update();
+    public void update(){
+        updateLoop();
+        refreshLists();
+    };
+
+    abstract void updateLoop();
 
     public boolean keepGoing(){
         return !stopThat;
     }
 
     abstract void setupModel();
+
+    void clearCollections(){
+        refreshLists();
+
+        backgroundObjects.clear();
+        buttonObjects.clear();
+        characterObjects.clear();
+        hudObjects.clear();
+
+        ripples.clear();
+    }
+
+
 }
