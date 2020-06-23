@@ -17,6 +17,7 @@ public class BackgroundRippleObject extends GameObject {
         this.alive = false;
     }
 
+    //use this for title screen background animations
     public BackgroundRippleObject revive(){
         return this.revive(
                 randomPosInObjBounds(),
@@ -24,10 +25,12 @@ public class BackgroundRippleObject extends GameObject {
         );
     }
 
+    //use this to summon a background ripple after a ButtonObject has been pressed (pass the pressed button as argument)
     public BackgroundRippleObject revive(ButtonObject b){
         return this.revive(b.getPos(), b.getObjectColour());
     }
 
+    //only public just in case I need to put a specific background ripple object with a specific colour in a specific place
     public BackgroundRippleObject revive(Vector2D p, Color c){
         super.revive(p, new Vector2D());
 
@@ -46,6 +49,8 @@ public class BackgroundRippleObject extends GameObject {
 
     @Override
     void individualUpdate() {
+        //gets bigger+fades out with each update
+            // (may implement a timer so it'll take multiple updates to change radius/transparency if this is too quick)
         timeToLive--;
         radius++;
         setColor();
@@ -61,6 +66,7 @@ public class BackgroundRippleObject extends GameObject {
         g.fillOval(-radius,-radius,d,d);
     }
 
+    //fades out over time
     void setColor(){
         this.objectColour = new Color(rValue,gValue,bValue,timeToLive);
     }
