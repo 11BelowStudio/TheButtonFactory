@@ -55,7 +55,7 @@ public class PlayerObject extends CharacterObject {
 
     }
 
-    public boolean isPressingButton(){
+    public boolean isTryingToPressAButton(){
         return pressingButton;
     }
 }

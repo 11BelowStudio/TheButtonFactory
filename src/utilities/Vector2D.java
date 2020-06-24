@@ -360,8 +360,8 @@ public final class Vector2D {
     }
 
     //random vector going in some direction from the origin
-    public static Vector2D randomVectorFromOrigin(Vector2D origin, double minDist, double maxDist){
-        Vector2D fromOrigin = polar(Math.toRadians(Math.random()*360),(Math.random()*maxDist+minDist)-minDist);
+    public static Vector2D randomVectorFromOrigin(Vector2D origin, double minDist, double rangeDist){
+        Vector2D fromOrigin = polar(Math.toRadians(Math.random()*360),(Math.random()*rangeDist)+minDist);
         fromOrigin.add(origin);
         return fromOrigin;
     }
@@ -433,5 +433,7 @@ public final class Vector2D {
         return (x == 0 && y == 0);
     }
 
-
+    public boolean isInBounds(double minX, double maxX, double minY, double maxY){
+        return ((x > minX) && (x < maxX) && (y > minY) && (y < maxY));
+    }
 }

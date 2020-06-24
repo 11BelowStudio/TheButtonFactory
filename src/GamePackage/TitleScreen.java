@@ -63,11 +63,15 @@ public class TitleScreen extends Model {
             }
         }
 
-        if (Math.random()*RIPPLE_CHANCES < rippleTimer && !(ripples.isEmpty())){
+        if (Math.random()*RIPPLE_CHANCES < rippleTimer && canWeSpawnARipple()){
             aliveBackground.add(ripples.pop().revive());
             rippleTimer = 0;
         } else{
             rippleTimer++;
+        }
+
+        if (ctrl.getTheAnyButton()){
+            endThis();
         }
     }
 

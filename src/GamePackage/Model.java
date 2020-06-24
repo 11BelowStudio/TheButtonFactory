@@ -2,6 +2,7 @@ package GamePackage;
 
 import GamePackage.GameObjects.*;
 import utilities.HighScoreHandler;
+import utilities.Vector2D;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -79,7 +80,7 @@ public abstract class Model {
 
         gameOver = false;
         stopThat = false;
-        backgroundColor = W3_CAMO_GREY;
+        backgroundColor = Color.black;
         this.hs = hs;
         this.ctrl = ctrl;
     }
@@ -166,5 +167,8 @@ public abstract class Model {
         ripples.clear();
     }
 
+    boolean canWeSpawnARipple(){
+        return (!ripples.isEmpty());
+    }
 
 }

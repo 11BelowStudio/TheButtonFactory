@@ -12,8 +12,8 @@ public class StringObject extends GameObject {
 
     private Font theFont;
 
-    public static final int RIGHT_ALIGN = 0;
-    public static final int LEFT_ALIGN = 1;
+    public static final int LEFT_ALIGN = 0;
+    public static final int RIGHT_ALIGN = 1;
     public static final int MIDDLE_ALIGN = 2;
 
     boolean scrolling;
@@ -126,12 +126,12 @@ public class StringObject extends GameObject {
                     widthOffset = -(w/2);
                     break;
             }
-            g.drawString(thisString,widthOffset+1,heightOffset+1);
-            g.drawString(thisString,widthOffset-1,heightOffset+1);
-            g.drawString(thisString,widthOffset-1,heightOffset-1);
-            g.drawString(thisString,widthOffset+1,heightOffset-1);
+            g.drawString(thisString,widthOffset+1,+1);
+            g.drawString(thisString,widthOffset-1,+1);
+            g.drawString(thisString,widthOffset-1,-1);
+            g.drawString(thisString,widthOffset+1,-1);
             g.setColor(objectColour);
-            g.drawString(thisString,widthOffset,heightOffset);
+            g.drawString(thisString,widthOffset,0);
             g.setFont(tempFont);
             areaRectangle = new Rectangle((int)position.x - (w/2), (int)position.y + heightOffset,w,h);
         }

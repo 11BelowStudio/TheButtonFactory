@@ -25,7 +25,7 @@ public abstract class CharacterObject extends GameObject {
         direction = Vector2D.polar(UP_RADIANS,1);
         setAngle();
         radius = OBJ_RADIUS;
-        speechString = new StringObject(new Vector2D(), new Vector2D());
+        speechString = new StringObject(new Vector2D(), new Vector2D(),StringObject.MIDDLE_ALIGN);
     }
 
     @Override
@@ -46,8 +46,7 @@ public abstract class CharacterObject extends GameObject {
             if (timeUntilWordsDisappear > 0){
                 timeUntilWordsDisappear--;
             } else{
-                speechString.setText("");
-                wordsVisible = false;
+                shutIt();
             }
         }
     }
@@ -59,6 +58,7 @@ public abstract class CharacterObject extends GameObject {
         //if it's out of bounds on the X axis, keep it within bounds
         if (position.x < OBJ_RADIUS || position.x > OBJ_X_BOUNDS) {
             velocity.x = 0; //cancels out X velocity
+            direction.invertX(); //reverse X direction
             if (position.x < OBJ_RADIUS) {
                 position.x = OBJ_RADIUS;
             } else {
@@ -69,6 +69,7 @@ public abstract class CharacterObject extends GameObject {
         //if it's out of bounds on the Y axis, keep it within bounds
         if (position.y < OBJ_RADIUS || position.y > OBJ_Y_BOUNDS){
             velocity.y = 0; //cancels out Y velocity
+            direction.invertY(); //reverse Y direction
             if (position.y < OBJ_RADIUS){
                 position.y = OBJ_RADIUS;
             } else{
@@ -93,6 +94,8 @@ public abstract class CharacterObject extends GameObject {
 
         g.setTransform(notRotated);
         //drawing the speech string
+        g.setColor(Color.black);
+        g.drawOval(-radius,-radius,d,d);
         if (wordsVisible){
             speechString.renderObject(g);
         }
@@ -102,6 +105,11 @@ public abstract class CharacterObject extends GameObject {
         speechString.setText(s);
         wordsVisible = true;
         timeUntilWordsDisappear = SPEECH_TIME;
+    }
+
+    public void shutIt(){
+        speechString.setText("");
+        wordsVisible = false;
     }
 
     void setAngle(){

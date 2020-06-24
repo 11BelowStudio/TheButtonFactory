@@ -14,11 +14,14 @@ public class Controller implements KeyListener, MouseListener {
 
     public void noAction() {action.noAction();}
 
+    public boolean getTheAnyButton(){ return action.theAnyButton; }
+
     @Override
     public void keyTyped(KeyEvent e) { }
 
     @Override
     public void keyPressed(KeyEvent e) {
+        action.theAnyButton = true;
         int key = e.getKeyCode();
         switch (key){
             case KeyEvent.VK_UP:
@@ -41,6 +44,7 @@ public class Controller implements KeyListener, MouseListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
+        action.theAnyButton = false;
         int key = e.getKeyCode();
         switch (key){
             case KeyEvent.VK_UP:

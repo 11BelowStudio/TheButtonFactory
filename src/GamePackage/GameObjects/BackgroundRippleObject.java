@@ -68,7 +68,7 @@ public class BackgroundRippleObject extends GameObject {
 
     //fades out over time
     void setColor(){
-        this.objectColour = new Color(rValue,gValue,bValue,timeToLive);
+        this.objectColour = new Color(rValue,gValue,bValue,timeToLive).brighter();
     }
 
     static Color makeRandomColor(){

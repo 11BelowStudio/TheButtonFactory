@@ -10,6 +10,7 @@ public class Action {
     public int yInput; // -1: up, 0: no movement, 1: down
     public int xInput; // -1 = left, 0 = no movement, 1 = right
     boolean space; //whether or not the spacebar has been pressed
+    boolean theAnyButton;
 
 
     boolean clicked; //whether or not the mouse is clicked
@@ -23,6 +24,7 @@ public class Action {
         xInput = 0;
         space = false;
         clicked = false;
+        theAnyButton = false;
     }
 
     public boolean checkForSpacePress(){
@@ -33,6 +35,10 @@ public class Action {
         } else{
             return false;
         }
+    }
+
+    public boolean getTheAnyButton(){
+        return theAnyButton;
     }
 
     Point getClickLocation(){

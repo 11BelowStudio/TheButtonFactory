@@ -9,10 +9,14 @@ import java.awt.*;
 public class ButtonObject extends GameObject{
 
 
-    static final int MIN_MAXPRESSES = 5;
-    static final int RANGE_MAXPRESSES = 5;
+    private static final int MIN_MAXPRESSES = 10;
+    private static final int RANGE_MAXPRESSES = 10;
 
 
+    private static final double MIN_DIST_FROM_OTHER = 100;
+    private static final double RANGE_DIST_FROM_OTHER = 300;
+
+    private static final double MOVEMENT_CHANCE = 0.25;
 
 
 
@@ -22,7 +26,12 @@ public class ButtonObject extends GameObject{
     int decayTime;
     int decayRate;
 
-    static final int STANDARD_DECAY = 50;
+    double buttonValue;
+    private static final double DEFAULT_BUTTON_VALUE = 1;
+    private static final double MIN_BUTTON_VALUE = 0.1;
+    private static final double BUTTON_DEVALUATION_RATE = 0.9;
+
+    private static final int STANDARD_DECAY = 50;
 
     private final AttributeStringObject<Integer> buttonLabel;
 
@@ -30,7 +39,7 @@ public class ButtonObject extends GameObject{
         super(new Vector2D(), new Vector2D());
         radius = OBJ_RADIUS;
         alive = false;
-        setupMaxPresses();
+        setupMaxPresses(getRandomMaxPresses());
         buttonLabel = new AttributeStringObject<>(
                 new Vector2D(),
                 new Vector2D(),
@@ -41,24 +50,60 @@ public class ButtonObject extends GameObject{
     }
 
     public ButtonObject revive(Vector2D p, Vector2D v){
+        return this.revive(p,v, getRandomMaxPresses());
+
+    }
+
+    public ButtonObject revive(Vector2D p, Vector2D v, int presses){
         super.revive(p,v);
-        setupMaxPresses();
+        buttonValue = DEFAULT_BUTTON_VALUE;
+        setupMaxPresses(presses);
         buttonLabel.revive();
         pressesToLiveChanged();
         return this;
     }
 
-
-    public ButtonObject revive(Vector2D p){
-        return(this.revive(p,new Vector2D()));
+    public ButtonObject revive(){
+        return this.revive(randomPosInObjBounds(),willThisMove());
     }
 
-    public ButtonObject revive(boolean moving){
-        Vector2D pos = randomPosInObjBounds();
+    public ButtonObject reviveNoMovement(){
+        return this.revive(randomPosInObjBounds());
+    }
+
+    public ButtonObject revive(Vector2D p){ return(this.revive(p,new Vector2D())); }
+
+    public ButtonObject reviveNoMovement(ButtonObject other){
+        this.revive(getPosFromOtherButtonObject(other));
+        keepInBounds();
+        return this;
+    }
+
+    public ButtonObject revive(ButtonObject other){
+        this.revive(getPosFromOtherButtonObject(other), willThisMove());
+        keepInBounds();
+        return this;
+    }
+
+    private static Vector2D getPosFromOtherButtonObject(ButtonObject other){
+        boolean foundValidVector;
+        Vector2D attemptVector;
+        do {
+            attemptVector = Vector2D.randomVectorFromOrigin(other.getPos(), MIN_DIST_FROM_OTHER, RANGE_DIST_FROM_OTHER);
+            foundValidVector = attemptVector.isInBounds(OBJ_RADIUS,OBJ_X_BOUNDS,OBJ_RADIUS,OBJ_Y_BOUNDS);
+        } while (!foundValidVector);
+        return attemptVector;
+    }
+
+    private boolean willThisMove(){
+        return (Math.random() < MOVEMENT_CHANCE);
+    }
+
+    public ButtonObject revive(Vector2D p, boolean moving){
         if (moving){
             return(
                 this.revive(
-                    pos,
+                    p,
                     Vector2D.polar(
                         Math.random()*2*Math.PI,
                         Math.random() * BUTTON_MAX_SPEED
@@ -66,19 +111,21 @@ public class ButtonObject extends GameObject{
                 )
             );
         } else{
-            return (this.revive(pos));
+            return (this.revive(p));
         }
     }
 
-    private void setupMaxPresses(){
-        maxPresses = (int)(MIN_MAXPRESSES + (Math.random() * RANGE_MAXPRESSES));
-        pressesToLive = maxPresses;
+    private void setupMaxPresses(int maxPressValue){
+        pressesToLive = maxPresses = maxPressValue;
         decayRate = STANDARD_DECAY;
     }
 
     public void pressed(){
         if (pressesToLive < maxPresses){
             pressesToLive++;
+            if (decayRate > 10){
+                decayRate--;
+            }
             decayTime = decayRate;
             pressesToLiveChanged();
             SoundManager.playClap();
@@ -87,9 +134,6 @@ public class ButtonObject extends GameObject{
 
     private void decay(){
         if (decayTime == 0){
-            if (decayRate > 1){
-                decayRate--;
-            }
             pressesToLive--;
             decayTime = decayRate;
             pressesToLiveChanged();
@@ -135,8 +179,14 @@ public class ButtonObject extends GameObject{
     }
 
     private void pressesToLiveChanged(){
-        int redScale = (int)((pressesToLive/maxPresses) * 255);
-        this.objectColour = new Color(redScale, 255-redScale, 0);
+        float hue = (float) ((double)pressesToLive/(double)maxPresses)/3;
+        this.objectColour = Color.getHSBColor(
+                hue,
+                0.9f,
+                1.0f
+        );
+        //int redScale = ((pressesToLive/maxPresses) * 255);
+        //this.objectColour = new Color(redScale, 255-redScale, 0);
         //green at max presses, fades to red as it gets closer to 0
 
         buttonLabel.showValue(pressesToLive);
@@ -149,7 +199,8 @@ public class ButtonObject extends GameObject{
         g.setColor(objectColour);
         int d = radius*2;
         g.fillOval(-radius,-radius,d,d);
-
+        g.setColor(Color.black);
+        g.drawOval(-radius,-radius,d,d);
         //draws the button label over the button
         buttonLabel.renderObject(g);
     }
@@ -161,5 +212,17 @@ public class ButtonObject extends GameObject{
         } else{
             return false;
         }
+    }
+
+    private static int getRandomMaxPresses(){
+        return (int)(MIN_MAXPRESSES + (Math.random() * RANGE_MAXPRESSES));
+    }
+
+    public double getPoints(){
+        double returnThisValue = buttonValue;
+        if (buttonValue > MIN_BUTTON_VALUE){
+            buttonValue *= BUTTON_DEVALUATION_RATE;
+        }
+        return returnThisValue;
     }
 }

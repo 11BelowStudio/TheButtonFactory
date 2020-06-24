@@ -21,11 +21,13 @@ public class BossObject extends CharacterObject {
         alive = false;
     }
 
-    public void heAppears(){
-        alive = true;
+    @Override
+    public BossObject revive(){
+        super.revive(new Vector2D(HALF_WIDTH, QUARTER_HEIGHT), new Vector2D());
+        return this;
     }
 
-    public void heGone(){
+    public void begone(){
         alive = false;
     }
 
