@@ -1,6 +1,5 @@
 package GamePackage.GameObjects;
 
-import GamePackage.Constants;
 import utilities.SoundManager;
 import utilities.Vector2D;
 
@@ -9,8 +8,8 @@ import java.awt.*;
 public class ButtonObject extends GameObject{
 
 
-    private static final int MIN_MAXPRESSES = 10;
-    private static final int RANGE_MAXPRESSES = 10;
+    private static final int MIN_MAXPRESSES = 15;
+    private static final int RANGE_MAXPRESSES = 20;
 
 
     private static final double MIN_DIST_FROM_OTHER = 100;
@@ -128,7 +127,7 @@ public class ButtonObject extends GameObject{
             }
             decayTime = decayRate;
             pressesToLiveChanged();
-            SoundManager.playClap();
+            SoundManager.playButtonPress();
         }
     }
 
@@ -137,7 +136,7 @@ public class ButtonObject extends GameObject{
             pressesToLive--;
             decayTime = decayRate;
             pressesToLiveChanged();
-            SoundManager.playPlac();
+            SoundManager.playButtonDecay();
         } else{
             decayTime--;
         }

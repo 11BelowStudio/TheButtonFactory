@@ -70,8 +70,8 @@ public class Game extends Model{
 
     @Override
     void endThis(){
-        super.endThis();
         hs.recordHighScore((int)score);
+        super.endThis();
     }
 
     @Override
@@ -180,7 +180,7 @@ public class Game extends Model{
             buttonStack.add(new ButtonObject());
         }
 
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < 20; i++) {
             ripples.add(new BackgroundRippleObject());
         }
 
@@ -320,6 +320,9 @@ public class Game extends Model{
                     joe.shutIt();
                     break;
                 case 20:
+                    purpleBastard.speak("keep at least 2 buttons active or imma fire you.");
+                    break;
+                case 21:
                     purpleBastard.shutIt();
                     purpleBastard.begone();
                     stillInCutscene = false;

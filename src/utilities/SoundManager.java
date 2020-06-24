@@ -4,6 +4,7 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.AudioInputStream;
 import java.io.File;
+import java.util.Arrays;
 //import java.io.File;
 
 
@@ -21,15 +22,24 @@ public class SoundManager {
 
 
     // this may need modifying
-    private final static String path = "sounds/";
+    private final static String path = "resourcesPlsNoDelet/sounds/";
 
-    private final static Clip gameTheme = getClip("SkyJumpGameMusic");
-    private final static Clip menuTheme = getClip("SkyJumpIntro");
-    private final static Clip clap = getClip("clap");
-    private final static Clip plac = getClip("plac");
-    private final static Clip eatingNoise = getClip("eatingNoise");
-    private final static Clip crunch = getClip("crunch");
-    private final static Clip nice = getClip("nice");
+
+    //arrays for clips that may be played multiple times at once
+    private final static Clip[] BUTTON_PRESS_ARRAY = new Clip[3];
+    private final static Clip[] BUTTON_DECAY_ARRAY = new Clip[6];
+    //cursor values for these arrays
+    private static int pressCursor = 0;
+    private static int decayCursor = 0;
+
+    //actually obtaining the clips
+    private final static Clip buttonPressNoise = getClip("clap");
+    private final static Clip buttonDecayNoise = getClip("plac");
+
+    static{
+        Arrays.fill(BUTTON_PRESS_ARRAY,buttonPressNoise);
+        Arrays.fill(BUTTON_DECAY_ARRAY,buttonDecayNoise);
+    }
 
 
 
@@ -54,40 +64,64 @@ public class SoundManager {
     }
 
 
+
     public static void startMenu(){
+        /*
         if (!playingMenu){
             menuTheme.loop(-1);
             playingMenu = true;
         }
+        */
     }
 
     public static void stopMenu(){
+        /*
         menuTheme.loop(0);
         menuTheme.stop();
         playingMenu = false;
+        */
     }
 
     public static void startGame(){
+        /*
         if (!playingGameTheme){
             gameTheme.loop(-1);
             playingGameTheme = true;
         }
+        */
     }
 
     public static void stopGame(){
+        /*
         gameTheme.loop(0);
         gameTheme.stop();
         playingGameTheme = false;
+        */
     }
 
+
+
     //playing a particular sound
-    public static void playClap(){ play(clap); }
-    public static void playPlac() { play(plac);}
-    public static void playEat(){ play(eatingNoise); }
+    //public static void playButtonPress(){ play(buttonPressNoise); }
+    //public static void playButtonDecay() { play(buttonDecayNoise);}
 
-    public static void playCrunch(){ play(crunch); }
 
-    public static void playNice(){ play(nice); }
+    //playing the clips that are held in an array of Clips
+    private static int playClipHeldInArray(Clip[] clipArray, int arrayCursor){
+        //play the clip at the position the cursor points to, increment the cursor value, and return it.
+        Clip clip = clipArray[arrayCursor];
+        clip.setFramePosition(0);
+        clip.start();
+        return ((arrayCursor + 1) % clipArray.length);
+    }
+
+    public static void playButtonPress() {
+        pressCursor = playClipHeldInArray(BUTTON_PRESS_ARRAY, pressCursor);
+    }
+
+    public static void playButtonDecay(){
+        decayCursor = playClipHeldInArray(BUTTON_DECAY_ARRAY, decayCursor);
+    }
 
 
 

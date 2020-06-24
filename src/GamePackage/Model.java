@@ -60,6 +60,10 @@ public abstract class Model {
 
     //w3schools camo grey: 9495a5
     static Color W3_CAMO_GREY = new Color(148, 149, 165);
+    //w3schools BS 381 (381 642) night: #282b2f
+    static Color W3_NIGHT = new Color(40, 43, 47);
+    //w3schools BS 4800 (20-C-40) midnight: #29374b
+    static Color W3_MIDNIGHT = new Color(41, 55, 75);
 
 
 
@@ -80,7 +84,7 @@ public abstract class Model {
 
         gameOver = false;
         stopThat = false;
-        backgroundColor = Color.black;
+        backgroundColor = W3_NIGHT;
         this.hs = hs;
         this.ctrl = ctrl;
     }

@@ -27,7 +27,7 @@ public class BackgroundRippleObject extends GameObject {
 
     //use this to summon a background ripple after a ButtonObject has been pressed (pass the pressed button as argument)
     public BackgroundRippleObject revive(ButtonObject b){
-        return this.revive(b.getPos(), b.getObjectColour());
+        return this.revive(new Vector2D(b.getPos()), b.getObjectColour());
     }
 
     //only public just in case I need to put a specific background ripple object with a specific colour in a specific place
