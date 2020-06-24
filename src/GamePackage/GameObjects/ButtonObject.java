@@ -15,7 +15,7 @@ public class ButtonObject extends GameObject{
     private static final double MIN_DIST_FROM_OTHER = 100;
     private static final double RANGE_DIST_FROM_OTHER = 300;
 
-    private static final double MOVEMENT_CHANCE = 0.25;
+    private static final double MOVEMENT_CHANCE = 0.4;
 
 
 
