@@ -32,13 +32,14 @@ public class ButtonObject extends GameObject{
 
     private static final int STANDARD_DECAY = 50;
 
-    private final AttributeStringObject<Integer> buttonLabel;
+    //private final AttributeStringObject<Integer> buttonLabel;
 
     public ButtonObject() {
         super(new Vector2D(), new Vector2D());
         radius = OBJ_RADIUS;
         alive = false;
         setupMaxPresses(getRandomMaxPresses());
+        /*
         buttonLabel = new AttributeStringObject<>(
                 new Vector2D(),
                 new Vector2D(),
@@ -46,6 +47,8 @@ public class ButtonObject extends GameObject{
                 pressesToLive,
                 StringObject.MIDDLE_ALIGN
         );
+
+         */
     }
 
     public ButtonObject revive(Vector2D p, Vector2D v){
@@ -57,7 +60,7 @@ public class ButtonObject extends GameObject{
         super.revive(p,v);
         buttonValue = DEFAULT_BUTTON_VALUE;
         setupMaxPresses(presses);
-        buttonLabel.revive();
+        //buttonLabel.revive();
         pressesToLiveChanged();
         return this;
     }
@@ -178,17 +181,17 @@ public class ButtonObject extends GameObject{
     }
 
     private void pressesToLiveChanged(){
-        float hue = (float) ((double)pressesToLive/(double)maxPresses)/3;
+
+        float hue = 1f - (float)(2*((double)pressesToLive/(double)maxPresses)/3);
+
         this.objectColour = Color.getHSBColor(
                 hue,
                 0.9f,
                 1.0f
         );
-        //int redScale = ((pressesToLive/maxPresses) * 255);
-        //this.objectColour = new Color(redScale, 255-redScale, 0);
         //green at max presses, fades to red as it gets closer to 0
 
-        buttonLabel.showValue(pressesToLive);
+        //buttonLabel.showValue(pressesToLive);
         //buttonLabel shows updated pressesToLive value
     }
 
@@ -201,7 +204,7 @@ public class ButtonObject extends GameObject{
         g.setColor(Color.black);
         g.drawOval(-radius,-radius,d,d);
         //draws the button label over the button
-        buttonLabel.renderObject(g);
+        //buttonLabel.renderObject(g);
     }
 
     public boolean collideWithPlayer(PlayerObject p){

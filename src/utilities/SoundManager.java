@@ -36,6 +36,8 @@ public class SoundManager {
     //actually obtaining the clips
     private final static Clip buttonPressNoise = getClip("clap");
     private final static Clip buttonDecayNoise = getClip("plac");
+    
+    private final static Clip menuTheme = getClip("TheMenuTheme");
 
     private final static Clip gameBackingTrack = getClip("TheMusicWhatPlaysWhenYouAreDoingWell");
     private final static Clip gameOverlayTrack = getClip("placeholderOverlayNoises");
@@ -70,20 +72,20 @@ public class SoundManager {
 
 
     public static void startMenu(){
-        /*
+
         if (!playingMenu){
             menuTheme.loop(-1);
             playingMenu = true;
         }
-        */
+
     }
 
     public static void stopMenu(){
-        /*
+
         menuTheme.loop(0);
         menuTheme.stop();
         playingMenu = false;
-        */
+
     }
 
     public static void startGameBacking(){
