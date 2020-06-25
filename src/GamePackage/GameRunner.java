@@ -37,7 +37,7 @@ public class GameRunner {
         Controller ctrl = new Controller();
 
         frame.addKeyListener(ctrl);
-        //frame.addMouseListener(ctrl);
+        frame.addMouseListener(ctrl);
 
         view = new View();
 
@@ -112,13 +112,9 @@ public class GameRunner {
 
     private Model modelSwapper(boolean swapToMenu){
         if (swapToMenu){
-            SoundManager.stopGame();
-            SoundManager.startMenu();
             return title.revive();
             //returns a revived title screen/menu if it must swap to the menu
         } else{
-            SoundManager.stopMenu();
-            SoundManager.startGame();
             return game.revive();
             //returns a revived game if it must swap to the game
         }

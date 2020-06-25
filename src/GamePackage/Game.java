@@ -2,6 +2,7 @@ package GamePackage;
 
 import GamePackage.GameObjects.*;
 import utilities.HighScoreHandler;
+import utilities.SoundManager;
 import utilities.Vector2D;
 
 import java.util.Stack;
@@ -32,10 +33,13 @@ public class Game extends Model{
     private boolean stillInCutscene;
 
     private int newButtonSpawnTimer;
-    private final int MIN_BUTTON_SPAWN_TIME = 500;
-    private final int RANGE_BUTTON_SPAWN_TIME = 1000;
+    private static final int MIN_BUTTON_SPAWN_TIME = 500;
+    private static final int RANGE_BUTTON_SPAWN_TIME = 1000;
 
     private boolean buttonCountChanged;
+
+    private static final int START_VOCALS_BUTTON_COUNT = 3;
+    private static final int START_RUINING_VOCALS_BUTTON_COUNT = 5;
 
 
     public Game(Controller ctrl, HighScoreHandler hs) {
@@ -77,9 +81,15 @@ public class Game extends Model{
     @Override
     public Game revive() {
         super.revive();
-
         return this;
+    }
 
+    void startModelMusic(){
+        SoundManager.startGame();
+    }
+
+    void stopModelMusic(){
+        SoundManager.stopGame();
     }
 
     @Override

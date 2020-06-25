@@ -41,14 +41,17 @@ public class Action {
         return theAnyButton;
     }
 
-    Point getClickLocation(){
+    public boolean checkForClick(){
         if (clicked){
             clicked = false;
-            //need to click again for the next click to count
-            return clickLocation;
+            return true;
         } else{
-            return new Point(0,0);
+            return false;
         }
+    }
+
+    Point getClickLocation(){
+        return clickLocation;
     }
 
     Action(){}

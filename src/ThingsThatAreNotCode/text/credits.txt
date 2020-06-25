@@ -1,0 +1,35 @@
+The Button Factory
+
+* DESIGN *
+
+Designed by 11BelowStudio
+Loosely based on that 'hello my name is joe and I work in a button factory' thing
+(no idea who came up with that in the first place)
+
+* CODE *
+
+Programming by 11BelowStudio
+
+Uses some sample code provided by Dr. Dimitri Ognibene
+
+Code to include the images in the .jar by JB Nizet on StackOverflow
+(https://stackoverflow.com/a/8362018)
+Code to include some text in the .jar by Drew MacInnis on StackOverflow
+(https://stackoverflow.com/a/20389418)
+
+* AUDIO *
+
+The good vocals by DELTA100
+Everything else by 11BelowStudio
+Audio made using Audacity
+
+* VISUALS *
+
+Visuals by 11BelowStudio
+Sprites made using Paint.NET
+
+* CAST *
+
+Joe: Joe Mamma
+The boss: we don't know either
+The player: you (I think)

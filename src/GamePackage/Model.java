@@ -136,14 +136,19 @@ public abstract class Model {
 
     void endThis(){
         stopThat = true;
-
+        stopModelMusic();
         clearCollections();
     }
+
+    abstract void startModelMusic();
+
+    abstract void stopModelMusic();
 
     public Model revive(){
         this.gameOver = false;
         this.stopThat = false;
         setupModel();
+        startModelMusic();
         return this;
     }
 

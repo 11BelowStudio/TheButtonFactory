@@ -14,7 +14,10 @@ public class Controller implements KeyListener, MouseListener {
 
     public void noAction() {action.noAction();}
 
-    public boolean getTheAnyButton(){ return action.theAnyButton; }
+    boolean getTheAnyButton(){ return action.theAnyButton; }
+
+    boolean checkForSpacePress() { return action.checkForSpacePress(); }
+    //version of action.checkForSpacePress(), called only by TitleScreen
 
     @Override
     public void keyTyped(KeyEvent e) { }
