@@ -19,9 +19,9 @@ Code to include some text in the .jar by Drew MacInnis on StackOverflow
 
 * AUDIO *
 
-The good vocals by DELTA100
-Everything else by 11BelowStudio
-Audio made using Audacity
+The good vocals sung/spoken by DELTA100
+Lyrics and all the other sounds by 11BelowStudio
+Audio processed/mixed/etc using Audacity
 
 * VISUALS *
 

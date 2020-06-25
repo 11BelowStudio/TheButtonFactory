@@ -11,7 +11,7 @@ public abstract class CharacterObject extends GameObject {
 
     boolean wordsVisible;
 
-    static final int SPEECH_TIME = 50;
+    static final int SPEECH_TIME = 52;
     int timeUntilWordsDisappear;
 
     Vector2D direction;
