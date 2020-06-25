@@ -8,14 +8,14 @@ import java.awt.*;
 public class ButtonObject extends GameObject{
 
 
-    private static final int MIN_MAXPRESSES = 15;
+    private static final int MIN_MAXPRESSES = 10;
     private static final int RANGE_MAXPRESSES = 20;
 
 
     private static final double MIN_DIST_FROM_OTHER = 100;
     private static final double RANGE_DIST_FROM_OTHER = 300;
 
-    private static final double MOVEMENT_CHANCE = 0.4;
+    private static final double MOVEMENT_CHANCE = 0.6;
 
 
 
@@ -122,7 +122,7 @@ public class ButtonObject extends GameObject{
     public void pressed(){
         if (pressesToLive < maxPresses){
             pressesToLive++;
-            if (decayRate > 10){
+            if (decayRate > 5){
                 decayRate--;
             }
             decayTime = decayRate;

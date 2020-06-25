@@ -37,7 +37,7 @@ public class SoundManager {
     private final static Clip buttonPressNoise = getClip("clap");
     private final static Clip buttonDecayNoise = getClip("plac");
 
-    private final static Clip gameBackingTrack = getClip("placeholderBackingNoises");
+    private final static Clip gameBackingTrack = getClip("TheMusicWhatPlaysWhenYouAreDoingWell");
     private final static Clip gameOverlayTrack = getClip("placeholderOverlayNoises");
 
     static{
@@ -95,11 +95,16 @@ public class SoundManager {
 
     }
 
+    //TODO: menu theme
+    //TODO: game theme for less than 3 buttons
+    //TODO: play backing instead of default game theme if 3 buttons are active
+    //TODO: play overlay on top of backing if 4+ buttons are active
+
     public static void startGameOverlay(){
         if (!playingGameOverlay){
-            gameOverlayTrack.setFramePosition(gameBackingTrack.getFramePosition());
-            gameOverlayTrack.loop(-1);
-            playingGameOverlay = true;
+            //gameOverlayTrack.setFramePosition(gameBackingTrack.getFramePosition());
+            //gameOverlayTrack.loop(-1);
+            //playingGameOverlay = true;
         }
 
     }

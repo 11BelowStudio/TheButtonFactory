@@ -31,7 +31,7 @@ public abstract class GameObject {
     static final int OBJ_X_BOUNDS = Constants.GAME_WIDTH - OBJ_RADIUS;
     static final int OBJ_Y_BOUNDS = Constants.GAME_HEIGHT - OBJ_RADIUS;
 
-    static final int BUTTON_MAX_SPEED = 128;
+    static final int BUTTON_MAX_SPEED = 200;
 
     static final int PLAYER_MAX_SPEED = 250;
 
