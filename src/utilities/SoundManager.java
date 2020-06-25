@@ -19,6 +19,7 @@ public class SoundManager {
 
     private static boolean playingMenu = false;
     private static boolean playingGameTheme = false;
+    private static boolean playingGameOverlay = false;
 
 
     // this may need modifying
@@ -35,6 +36,9 @@ public class SoundManager {
     //actually obtaining the clips
     private final static Clip buttonPressNoise = getClip("clap");
     private final static Clip buttonDecayNoise = getClip("plac");
+
+    private final static Clip gameBackingTrack = getClip("placeholderBackingNoises");
+    private final static Clip gameOverlayTrack = getClip("placeholderOverlayNoises");
 
     static{
         Arrays.fill(BUTTON_PRESS_ARRAY,buttonPressNoise);
@@ -82,21 +86,38 @@ public class SoundManager {
         */
     }
 
-    public static void startGame(){
-        /*
+    public static void startGameBacking(){
+
         if (!playingGameTheme){
-            gameTheme.loop(-1);
+            gameBackingTrack.loop(-1);
             playingGameTheme = true;
         }
-        */
+
     }
 
-    public static void stopGame(){
-        /*
-        gameTheme.loop(0);
-        gameTheme.stop();
+    public static void startGameOverlay(){
+        if (!playingGameOverlay){
+            gameOverlayTrack.setFramePosition(gameBackingTrack.getFramePosition());
+            gameOverlayTrack.loop(-1);
+            playingGameOverlay = true;
+        }
+
+    }
+
+    public static void stopGameBacking(){
+        stopGameOverlay();
+        gameBackingTrack.loop(0);
+        gameBackingTrack.stop();
         playingGameTheme = false;
-        */
+
+    }
+
+    public static void stopGameOverlay(){
+
+        gameOverlayTrack.loop(0);
+        gameOverlayTrack.stop();
+        playingGameOverlay = false;
+
     }
 
 

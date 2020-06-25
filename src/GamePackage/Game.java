@@ -85,11 +85,11 @@ public class Game extends Model{
     }
 
     void startModelMusic(){
-        SoundManager.startGame();
+        SoundManager.startGameBacking();
     }
 
     void stopModelMusic(){
-        SoundManager.stopGame();
+        SoundManager.stopGameBacking();
     }
 
     @Override
@@ -164,6 +164,11 @@ public class Game extends Model{
                     aliveCharacters.add(purpleBastard.revive());
                     gameOver = true;
                 }
+            }
+            if (activeButtonCount == 2 && previousButtonCount == 3){
+                SoundManager.stopGameOverlay();
+            } else if( previousButtonCount == 2 && activeButtonCount == 3 ){
+                SoundManager.startGameOverlay();
             }
         }
 
