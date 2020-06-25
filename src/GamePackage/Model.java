@@ -29,13 +29,6 @@ public abstract class Model {
     final Stack<BackgroundRippleObject> ripples;
 
 
-
-    int doughnutSpawnChance;
-    static final double DOUGHNUT_CHANCES = 10;
-
-    int backgroundSpawnChance;
-    static final double BACKGROUND_CHANCES = 5;
-
     Color backgroundColor;
     Rectangle backgroundRect = new Rectangle(0,0,GAME_WIDTH, GAME_HEIGHT);
 
@@ -155,7 +148,7 @@ public abstract class Model {
     public void update(){
         updateLoop();
         refreshLists();
-    };
+    }
 
     abstract void updateLoop();
 
