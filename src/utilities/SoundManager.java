@@ -36,11 +36,11 @@ public class SoundManager {
     //actually obtaining the clips
     private final static Clip buttonPressNoise = getClip("clap");
     private final static Clip buttonDecayNoise = getClip("plac");
-    
+
     private final static Clip menuTheme = getClip("TheMenuTheme");
 
     private final static Clip gameBackingTrack = getClip("TheMusicWhatPlaysWhenYouAreDoingWell");
-    private final static Clip gameOverlayTrack = getClip("placeholderOverlayNoises");
+    private final static Clip percival = getClip("percival");
 
     static{
         Arrays.fill(BUTTON_PRESS_ARRAY,buttonPressNoise);
@@ -104,9 +104,8 @@ public class SoundManager {
 
     public static void startGameOverlay(){
         if (!playingGameOverlay){
-            //gameOverlayTrack.setFramePosition(gameBackingTrack.getFramePosition());
-            //gameOverlayTrack.loop(-1);
-            //playingGameOverlay = true;
+            percival.loop(-1);
+            playingGameOverlay = true;
         }
 
     }
@@ -121,8 +120,8 @@ public class SoundManager {
 
     public static void stopGameOverlay(){
 
-        gameOverlayTrack.loop(0);
-        gameOverlayTrack.stop();
+        percival.loop(0);
+        percival.stop();
         playingGameOverlay = false;
 
     }
