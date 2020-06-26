@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="The Button Factory">
+    <output-path>$PROJECT_DIR$/out/artifacts/The_Button_Factory</output-path>
+    <root id="archive" name="The Button Factory.jar">
+      <element id="module-output" name="TheButtonFactory" />
+    </root>
+  </artifact>
+</component>
