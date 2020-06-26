@@ -50,6 +50,9 @@ public class SoundManager {
     private final static Clip doingGood = getClip("TheMusicWhatPlaysWhenYouAreDoingWell");
     private final static Clip percival = getClip("percival");
 
+    private final static Clip conversation = getClip("a conversation");
+    private final static Clip joesName = getClip("joes full name");
+
     static{
         Arrays.fill(BUTTON_PRESS_ARRAY,buttonPressNoise);
         Arrays.fill(BUTTON_DECAY_ARRAY,buttonDecayNoise);
@@ -170,6 +173,9 @@ public class SoundManager {
     //playing a particular sound
     public static void playNewButton() {play(newButton);}
     public static void playDespawn(){ play(despawn);}
+
+    public static void discussion() {play(conversation);}
+    public static void whoIsJoe(){play(joesName);}
 
 
     //playing the clips that are held in an array of Clips

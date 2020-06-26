@@ -147,9 +147,9 @@ public class TitleScreen extends Model {
                     Point clickPoint = currentAction.getClickLocation();
                     System.out.println(clickPoint);
                     if (titleText.isClicked(clickPoint)){
-                        //do thing
+                        SoundManager.whoIsJoe();
                     } else if (subtitleText.isClicked(clickPoint)){
-                        //do other thing
+                        SoundManager.discussion();
                     } else if (play.isClicked(clickPoint)){
                         titleScreenState = START_GAME_STATE;
                         titleScreenStateHasChanged = true;
