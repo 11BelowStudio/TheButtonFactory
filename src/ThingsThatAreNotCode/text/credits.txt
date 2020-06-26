@@ -1,5 +1,8 @@
 The Button Factory
 
+This game was made for the 'So Bad It's Good' Jam 2020
+https://itch.io/jam/sbigjam2020
+
 * DESIGN *
 
 Designed by 11BelowStudio
