@@ -46,8 +46,8 @@ public class TitleScreen extends Model {
         menuScreenStringObjects = new ArrayList<>();
 
         //declaring the stringobjects for the menu screen
-        titleText = new StringObject(new Vector2D(HALF_WIDTH,HALF_HEIGHT/2),new Vector2D(),"Button Factory",StringObject.MIDDLE_ALIGN,StringObject.BIG_SANS);
-        subtitleText = new StringObject(new Vector2D(HALF_WIDTH,5*(HALF_HEIGHT/8)), new Vector2D(),"The Game",StringObject.MIDDLE_ALIGN,StringObject.MEDIUM_SANS);
+        titleText = new StringObject(new Vector2D(HALF_WIDTH,HALF_HEIGHT/2),new Vector2D(),"The Button Factory",StringObject.MIDDLE_ALIGN,StringObject.BIG_SANS);
+        subtitleText = new StringObject(new Vector2D(HALF_WIDTH,5*(HALF_HEIGHT/8)), new Vector2D(),"A game about buttons",StringObject.MIDDLE_ALIGN,StringObject.MEDIUM_SANS);
         play = new StringObject(new Vector2D(HALF_WIDTH,HALF_HEIGHT),new Vector2D(),"*Play*",StringObject.MIDDLE_ALIGN,StringObject.MEDIUM_SANS);
         showScores = new StringObject(new Vector2D(HALF_WIDTH,5*(HALF_HEIGHT/4)),new Vector2D(),"*Show Scores*",StringObject.MIDDLE_ALIGN,StringObject.MEDIUM_SANS);
         showCredits = new StringObject(new Vector2D(HALF_WIDTH,3*(HALF_HEIGHT/2)),new Vector2D(),"*Show Credits*",StringObject.MIDDLE_ALIGN,StringObject.MEDIUM_SANS);

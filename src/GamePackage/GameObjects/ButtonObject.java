@@ -30,7 +30,9 @@ public class ButtonObject extends GameObject{
     private static final double MIN_BUTTON_VALUE = 0.1;
     private static final double BUTTON_DEVALUATION_RATE = 0.9;
 
-    private static final int STANDARD_DECAY = 50;
+    private static final int STANDARD_DECAY = 40;
+
+    private boolean fadesViaBlue;
 
     //private final AttributeStringObject<Integer> buttonLabel;
 
@@ -62,6 +64,8 @@ public class ButtonObject extends GameObject{
         setupMaxPresses(presses);
         //buttonLabel.revive();
         pressesToLiveChanged();
+        SoundManager.playNewButton();
+        fadesViaBlue = (Math.random() > 0.5);
         return this;
     }
 
@@ -124,13 +128,20 @@ public class ButtonObject extends GameObject{
 
     public void pressed(){
         if (pressesToLive < maxPresses){
-            pressesToLive++;
-            if (decayRate > 5){
+            howManyPressesWasThat();
+            if (decayRate > 3){
                 decayRate--;
             }
             decayTime = decayRate;
             pressesToLiveChanged();
             SoundManager.playButtonPress();
+        }
+    }
+
+    private void howManyPressesWasThat(){
+        pressesToLive += (1+(int)(Math.random()*5));
+        if (pressesToLive > maxPresses){
+            pressesToLive = maxPresses;
         }
     }
 
@@ -180,10 +191,13 @@ public class ButtonObject extends GameObject{
         }
     }
 
-    private void pressesToLiveChanged(){
+    private void pressesToLiveChanged() {
 
-        float hue = 1f - (float)(2*((double)pressesToLive/(double)maxPresses)/3);
-
+        float hue = ((((float)pressesToLive / (float)maxPresses)) / 3f);
+        if (fadesViaBlue) {
+            //hue = 1f - (float) (2 * ((double) pressesToLive / (double) maxPresses) / 3);
+            hue = 1f - (2 * hue);
+        }
         this.objectColour = Color.getHSBColor(
                 hue,
                 0.9f,

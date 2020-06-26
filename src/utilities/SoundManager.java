@@ -39,6 +39,9 @@ public class SoundManager {
     private final static Clip buttonPressNoise = getClip("clap");
     private final static Clip buttonDecayNoise = getClip("plac");
 
+    private final static Clip newButton = getClip("newButton");
+    private final static Clip despawn = getClip("despawn");
+
     private final static Clip menuTheme = getClip("TheMenuTheme");
 
     private final static Clip backingLoop = getClip("oneButtonLoop");
@@ -126,19 +129,17 @@ public class SoundManager {
     public static void startDoingWell(){
 
         if (!doingWellTheme){
+            doingGood.setFramePosition(0);
             doingGood.loop(-1);
             doingWellTheme = true;
         }
 
     }
 
-    //TODO: menu theme
-    //TODO: game theme for less than 3 buttons
-    //TODO: play backing instead of default game theme if 3 buttons are active
-    //TODO: play overlay on top of backing if 4+ buttons are active
 
     public static void helloPercival(){
         if (!percivalIsHere){
+            percival.setFramePosition(0);
             percival.loop(-1);
             percivalIsHere = true;
         }
@@ -146,17 +147,20 @@ public class SoundManager {
     }
 
     public static void stopDoingWell(){
-        byePercival();
+        if (percivalIsHere) {
+            byePercival();
+        }
         doingGood.loop(0);
         doingGood.stop();
+
         doingWellTheme = false;
 
     }
 
     public static void byePercival(){
-
         percival.loop(0);
         percival.stop();
+
         percivalIsHere = false;
 
     }
@@ -164,8 +168,8 @@ public class SoundManager {
 
 
     //playing a particular sound
-    //public static void playButtonPress(){ play(buttonPressNoise); }
-    //public static void playButtonDecay() { play(buttonDecayNoise);}
+    public static void playNewButton() {play(newButton);}
+    public static void playDespawn(){ play(despawn);}
 
 
     //playing the clips that are held in an array of Clips

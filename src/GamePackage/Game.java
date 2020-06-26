@@ -133,6 +133,7 @@ public class Game extends Model{
             } else{
                 buttonStack.add(o);
                 buttonCountChanged = true;
+                SoundManager.playDespawn();
             }
         }
 
@@ -279,18 +280,20 @@ public class Game extends Model{
             ButtonObject reviveThis = buttonStack.pop();
             if (aliveButtonObjects.isEmpty()){
                 if (allowedToMove) {
-                    aliveButtonObjects.add(reviveThis.revive());
+                   reviveThis.revive();
                 } else{
-                    aliveButtonObjects.add(reviveThis.reviveNoMovement());
+                    reviveThis.reviveNoMovement();
                 }
             } else{
                 ButtonObject reviveFrom = aliveButtonObjects.get((int)(Math.random()*aliveButtonObjects.size()));
                 if (allowedToMove){
-                    aliveButtonObjects.add(reviveThis.revive(reviveFrom));
+                    reviveThis.revive(reviveFrom);
                 } else{
-                    aliveButtonObjects.add(reviveThis.reviveNoMovement(reviveFrom));
+                    reviveThis.reviveNoMovement(reviveFrom);
                 }
             }
+            aliveButtonObjects.add(reviveThis);
+            reviveRipple(reviveThis);
             resetButtonSpawnTimer();
             buttonCountChanged = true;
         }
@@ -327,13 +330,13 @@ public class Game extends Model{
                     joe.shutIt();
                     purpleBastard.speak("\"Well then hit this button with your spacebar.\"");
                     if (canWeSpawnAButton()){
-                        aliveButtonObjects.add(
-                            buttonStack.pop().revive(
+                        ButtonObject firstButton = buttonStack.pop().revive(
                                 new Vector2D(HALF_WIDTH,HALF_HEIGHT-50),
                                 new Vector2D(),
                                 30
-                            )
                         );
+                        aliveButtonObjects.add(firstButton);
+                        reviveRipple(firstButton);
                         buttonCountChanged = true;
                     }
                     SoundManager.startBacking();
