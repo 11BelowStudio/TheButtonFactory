@@ -84,13 +84,9 @@ public class Game extends Model{
         return this;
     }
 
-    void startModelMusic(){
-        SoundManager.startGameBacking();
-    }
+    void startModelMusic(){ }
 
-    void stopModelMusic(){
-        SoundManager.stopGameBacking();
-    }
+    void stopModelMusic(){ SoundManager.stopDoingWell(); SoundManager.endBacking(); SoundManager.byePercival(); }
 
     @Override
     void updateLoop() {
@@ -165,10 +161,35 @@ public class Game extends Model{
                     gameOver = true;
                 }
             }
-            if (activeButtonCount == 2 && previousButtonCount == 3){
-                SoundManager.stopGameOverlay();
-            } else if( previousButtonCount == 2 && activeButtonCount == 3 ){
-                SoundManager.startGameOverlay();
+
+            switch (activeButtonCount){
+                case 1:
+                    SoundManager.endOverlay();
+                    break;
+                case 2:
+                    if (previousButtonCount == 1) {
+                        SoundManager.startOverlay();
+                    } else if (previousButtonCount == 3){
+                        SoundManager.stopDoingWell();
+                        SoundManager.startOverlay();
+                        SoundManager.startBacking();
+                    }
+                    break;
+                case 3:
+                    if (previousButtonCount == 2){
+                        SoundManager.endBacking();
+                        SoundManager.startDoingWell();
+                    } else if (previousButtonCount == 4){
+                        SoundManager.byePercival();
+                    }
+                    break;
+                case 4:
+                    if (previousButtonCount == 3){
+                        SoundManager.helloPercival();
+                    }
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -315,11 +336,13 @@ public class Game extends Model{
                         );
                         buttonCountChanged = true;
                     }
+                    SoundManager.startBacking();
                     break;
                 case 17:
                     joe.shutIt();
                     purpleBastard.speak("\"Well then hit this button with your spacebar.\"");
                     reviveAButtonObject(false);
+                    SoundManager.startOverlay();
                     break;
                 case 8:
                     purpleBastard.begone();

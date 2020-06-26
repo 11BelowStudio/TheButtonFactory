@@ -8,11 +8,13 @@ nope
 43
 k
 31
+ no
+31
 Joe Mamma
 29
-no
-7
 not joe
+7
+no
 7
 ok so basically im placeholder
 -1

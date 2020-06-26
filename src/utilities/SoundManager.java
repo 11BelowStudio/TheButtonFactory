@@ -18,9 +18,11 @@ public class SoundManager {
 
 
     private static boolean playingMenu = false;
-    private static boolean playingGameTheme = false;
-    private static boolean playingGameOverlay = false;
+    private static boolean doingWellTheme = false;
+    private static boolean percivalIsHere = false;
 
+    private static boolean backingLooping = false;
+    private static boolean overlayLooping = false;
 
     // this may need modifying
     private final static String path = "resourcesPlsNoDelet/sounds/";
@@ -39,7 +41,10 @@ public class SoundManager {
 
     private final static Clip menuTheme = getClip("TheMenuTheme");
 
-    private final static Clip gameBackingTrack = getClip("TheMusicWhatPlaysWhenYouAreDoingWell");
+    private final static Clip backingLoop = getClip("oneButtonLoop");
+    private final static Clip overlayLoop = getClip("twoButtonLoop");
+
+    private final static Clip doingGood = getClip("TheMusicWhatPlaysWhenYouAreDoingWell");
     private final static Clip percival = getClip("percival");
 
     static{
@@ -88,11 +93,41 @@ public class SoundManager {
 
     }
 
-    public static void startGameBacking(){
+    public static void startBacking(){
+        if (!backingLooping){
+            backingLoop.loop(-1);
+            backingLooping = true;
+        }
+    }
 
-        if (!playingGameTheme){
-            gameBackingTrack.loop(-1);
-            playingGameTheme = true;
+    public static void startOverlay(){
+        if (!overlayLooping){
+            overlayLoop.setFramePosition(backingLoop.getFramePosition());
+            overlayLoop.loop(-1);
+            overlayLooping = true;
+        }
+    }
+
+    public static void endOverlay(){
+        overlayLoop.loop(0);
+        overlayLoop.stop();
+        overlayLooping = false;
+    }
+
+    public static void endBacking(){
+        if (overlayLooping){
+            endOverlay();
+        }
+        backingLoop.loop(0);
+        backingLoop.stop();
+        backingLooping = false;
+    }
+
+    public static void startDoingWell(){
+
+        if (!doingWellTheme){
+            doingGood.loop(-1);
+            doingWellTheme = true;
         }
 
     }
@@ -102,27 +137,27 @@ public class SoundManager {
     //TODO: play backing instead of default game theme if 3 buttons are active
     //TODO: play overlay on top of backing if 4+ buttons are active
 
-    public static void startGameOverlay(){
-        if (!playingGameOverlay){
+    public static void helloPercival(){
+        if (!percivalIsHere){
             percival.loop(-1);
-            playingGameOverlay = true;
+            percivalIsHere = true;
         }
 
     }
 
-    public static void stopGameBacking(){
-        stopGameOverlay();
-        gameBackingTrack.loop(0);
-        gameBackingTrack.stop();
-        playingGameTheme = false;
+    public static void stopDoingWell(){
+        byePercival();
+        doingGood.loop(0);
+        doingGood.stop();
+        doingWellTheme = false;
 
     }
 
-    public static void stopGameOverlay(){
+    public static void byePercival(){
 
         percival.loop(0);
         percival.stop();
-        playingGameOverlay = false;
+        percivalIsHere = false;
 
     }
 
