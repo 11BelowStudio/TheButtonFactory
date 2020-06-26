@@ -8,14 +8,14 @@ import java.util.Collections;
 
 public class HighScoreHandler {
 
-    private Component parentComponent;
+    private final Component parentComponent;
 
-    private ArrayList<ScoreRecord> highScores;
+    private final ArrayList<ScoreRecord> highScores;
     //arrayList of scoreRecord objects, exists throughout runtime, even if the high score file itself goes missing
 
-    private String fileLocation; //location of the high score file
+    private final String fileLocation; //location of the high score file
 
-    private File scoreFile; //reference to the high score file
+    private final File scoreFile; //reference to the high score file
 
     private boolean fileExists; //tracks whether or not the high score file exists
 
@@ -126,7 +126,7 @@ public class HighScoreHandler {
 
         } else{
             //less rewarding message if the player did not get a high score.
-            scoreMessage = "<h1>congrats u died lol</h1>"
+            scoreMessage = "<h1>congrats u lost lol</h1>"
                     +"<p>your score: " + newScore + "</p>"
                     +"<p>your position: " + yourPos + "</p>"
                     +"<p><br>Please enter your name, so it can be recorded on the leaderboard.</p>";
