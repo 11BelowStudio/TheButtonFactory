@@ -2,6 +2,9 @@ package GamePackage;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 public class GameFrame extends JFrame {
 
@@ -20,10 +23,22 @@ public class GameFrame extends JFrame {
         comp = v;
         getContentPane().add(BorderLayout.CENTER, comp);
         this.setVisible(true);
+
         pack();
+
+        this.addComponentListener(
+                new ComponentAdapter() {
+                    @Override
+                    public void componentResized(ComponentEvent e) {
+                        Dimension newDimension = GameFrame.this.getContentPane().getSize();
+                        comp.setSize(newDimension);
+                    }
+                }
+        );
     }
 
-    public Dimension getDimensions(){ return comp.getPreferredSize(); }
+
+    //public Dimension getDimensions(){ return comp.getPreferredSize(); }
 
 
 }

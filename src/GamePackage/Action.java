@@ -12,6 +12,9 @@ public class Action {
     boolean space; //whether or not the spacebar has been pressed
     boolean theAnyButton;
 
+    public int xScroll;
+    public int yScroll;
+
 
     boolean clicked; //whether or not the mouse is clicked
 

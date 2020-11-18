@@ -9,7 +9,7 @@ import java.util.Stack;
 
 import static GamePackage.Constants.*;
 
-public class Game extends Model{
+public class Game extends Model {
 
     private final PlayerObject joe;
 
@@ -59,7 +59,7 @@ public class Game extends Model{
 
 
         multiplierText = new AttributeStringObject<>(
-                new Vector2D(GAME_WIDTH-20, GAME_HEIGHT - 20),
+                new Vector2D(GAME_WIDTH - 20, GAME_HEIGHT - 20),
                 new Vector2D(),
                 "",
                 1.0,
@@ -69,12 +69,11 @@ public class Game extends Model{
         );
 
 
-
     }
 
     @Override
-    void endThis(){
-        hs.recordHighScore((int)score);
+    void endThis() {
+        hs.recordHighScore((int) score);
         super.endThis();
     }
 
@@ -84,33 +83,38 @@ public class Game extends Model{
         return this;
     }
 
-    void startModelMusic(){ }
+    void startModelMusic() {
+    }
 
-    void stopModelMusic(){ SoundManager.stopDoingWell(); SoundManager.endBacking(); SoundManager.byePercival(); }
+    void stopModelMusic() {
+        SoundManager.stopDoingWell();
+        SoundManager.endBacking();
+        SoundManager.byePercival();
+    }
 
     @Override
     void updateLoop() {
         buttonCountChanged = false;
 
 
-        if (stillInCutscene){
+        if (stillInCutscene) {
             cutsceneHandler();
         }
 
         //updating characters
-        for (CharacterObject o: characterObjects){
+        for (CharacterObject o : characterObjects) {
             o.update();
-            if (o.stillAlive()){
+            if (o.stillAlive()) {
                 aliveCharacters.add(o);
             }
         }
 
         //updating ripples
-        for (BackgroundRippleObject o: backgroundObjects){
+        for (BackgroundRippleObject o : backgroundObjects) {
             o.update();
-            if (o.stillAlive()){
+            if (o.stillAlive()) {
                 aliveBackground.add(o);
-            } else{
+            } else {
                 ripples.push(o);
             }
         }
@@ -118,74 +122,74 @@ public class Game extends Model{
         //working out if collision handling is needed for the buttons
         boolean needToHandleCollisions = joe.isTryingToPressAButton();
         //updating buttons
-        for (ButtonObject o: buttonObjects){
+        for (ButtonObject o : buttonObjects) {
             o.update();
             //will only attempt to handle collisions if necessary
-            if (needToHandleCollisions && o.collideWithPlayer(joe)){
+            if (needToHandleCollisions && o.collideWithPlayer(joe)) {
                 //collideWithPlayer performs necessary updates if the player did collide with the buttonObject
-                score += (o.getPoints())*multiplier;
+                score += (o.getPoints()) * multiplier;
                 updateScoreDisplay();
                 reviveRipple(o); //spawns ripple
                 needToHandleCollisions = false; //no more collision checking
             }
-            if (o.stillAlive()){
+            if (o.stillAlive()) {
                 aliveButtonObjects.add(o);
-            } else{
+            } else {
                 buttonStack.add(o);
                 buttonCountChanged = true;
                 SoundManager.playDespawn();
             }
         }
 
-        if (gameOver){
-            if (ctrl.getTheAnyButton()){
+        if (gameOver) {
+            if (ctrl.getTheAnyButton()) {
                 endThis();
             }
-        } else{
-            if (!stillInCutscene){
-                if (newButtonSpawnTimer < 1){
+        } else {
+            if (!stillInCutscene) {
+                if (newButtonSpawnTimer < 1) {
                     reviveAButtonObject(true);
-                } else{
+                } else {
                     newButtonSpawnTimer--;
                 }
             }
         }
 
-        if (buttonCountChanged){
+        if (buttonCountChanged) {
             int previousButtonCount = activeButtonCount;
             activeButtonCount = aliveButtonObjects.size();
-            if (!stillInCutscene){
+            if (!stillInCutscene) {
                 updateMultiplier(); //multiplier kept at default value (1) until cutscene is over
-                if (activeButtonCount < 2){
+                if (activeButtonCount < 2) {
                     purpleBastard.speak("right that's it you're fired.");
                     aliveCharacters.add(purpleBastard.revive());
                     gameOver = true;
                 }
             }
 
-            switch (activeButtonCount){
+            switch (activeButtonCount) {
                 case 1:
                     SoundManager.endOverlay();
                     break;
                 case 2:
                     if (previousButtonCount == 1) {
                         SoundManager.startOverlay();
-                    } else if (previousButtonCount == 3){
+                    } else if (previousButtonCount == 3) {
                         SoundManager.stopDoingWell();
                         SoundManager.startOverlay();
                         SoundManager.startBacking();
                     }
                     break;
                 case 3:
-                    if (previousButtonCount == 2){
+                    if (previousButtonCount == 2) {
                         SoundManager.endBacking();
                         SoundManager.startDoingWell();
-                    } else if (previousButtonCount == 4){
+                    } else if (previousButtonCount == 4) {
                         SoundManager.byePercival();
                     }
                     break;
                 case 4:
-                    if (previousButtonCount == 3){
+                    if (previousButtonCount == 3) {
                         SoundManager.helloPercival();
                     }
                     break;
@@ -194,9 +198,9 @@ public class Game extends Model{
             }
         }
 
-        for (StringObject o: hudObjects){
+        for (StringObject o : hudObjects) {
             o.update();
-            if (o.stillAlive()){
+            if (o.stillAlive()) {
                 aliveHUD.add(o);
             }
         }
@@ -236,59 +240,58 @@ public class Game extends Model{
     }
 
     @Override
-    void clearCollections(){
+    void clearCollections() {
         super.clearCollections();
         buttonStack.clear();
     }
 
 
-
-    private void updateMultiplier(){
+    private void updateMultiplier() {
         double newMultiplier = 0.8 + (0.1 * activeButtonCount);
-        multiplier = Math.round(newMultiplier * 10)/10.0;
+        multiplier = Math.round(newMultiplier * 10) / 10.0;
         setMultiplierDisplay(multiplier);
     }
 
-    private void setMultiplierDisplay(double valueToShow){
+    private void setMultiplierDisplay(double valueToShow) {
         multiplierText.showValue(valueToShow);
     }
 
-    private void updateScoreDisplay(){
+    private void updateScoreDisplay() {
         scoreText.showValue(scoreToInt());
     }
 
-    private int scoreToInt(){
-        return (int)score;
+    private int scoreToInt() {
+        return (int) score;
     }
 
-    private void reviveRipple(ButtonObject sourceButton){
-        if (canWeSpawnARipple()){
+    private void reviveRipple(ButtonObject sourceButton) {
+        if (canWeSpawnARipple()) {
             aliveBackground.add(ripples.pop().revive(sourceButton));
         }
     }
 
-    private void resetButtonSpawnTimer(){
-        newButtonSpawnTimer = MIN_BUTTON_SPAWN_TIME + (int)(Math.random() * RANGE_BUTTON_SPAWN_TIME);
+    private void resetButtonSpawnTimer() {
+        newButtonSpawnTimer = MIN_BUTTON_SPAWN_TIME + (int) (Math.random() * RANGE_BUTTON_SPAWN_TIME);
     }
 
-    private boolean canWeSpawnAButton(){
+    private boolean canWeSpawnAButton() {
         return (!buttonStack.isEmpty());
     }
 
-    private void reviveAButtonObject(boolean allowedToMove){
-        if (canWeSpawnAButton()){
+    private void reviveAButtonObject(boolean allowedToMove) {
+        if (canWeSpawnAButton()) {
             ButtonObject reviveThis = buttonStack.pop();
-            if (aliveButtonObjects.isEmpty()){
+            if (aliveButtonObjects.isEmpty()) {
                 if (allowedToMove) {
-                   reviveThis.revive();
-                } else{
+                    reviveThis.revive();
+                } else {
                     reviveThis.reviveNoMovement();
                 }
-            } else{
-                ButtonObject reviveFrom = aliveButtonObjects.get((int)(Math.random()*aliveButtonObjects.size()));
-                if (allowedToMove){
+            } else {
+                ButtonObject reviveFrom = aliveButtonObjects.get((int) (Math.random() * aliveButtonObjects.size()));
+                if (allowedToMove) {
                     reviveThis.revive(reviveFrom);
-                } else{
+                } else {
                     reviveThis.reviveNoMovement(reviveFrom);
                 }
             }
@@ -299,39 +302,46 @@ public class Game extends Model{
         }
     }
 
-    private void cutsceneHandler(){
-        if (cutsceneTimerCheck()){
-            switch (cutsceneState){
-                case 0: case 10:
+    private void cutsceneHandler() {
+        if (cutsceneTimerCheck()) {
+            switch (cutsceneState) {
+                case 0:
+                case 10:
                     joe.speak("Hello.");
                     break;
-                case 1: case 11:
+                case 1:
+                case 11:
                     joe.speak("My name is Joe.");
                     break;
-                case 2: case 12:
+                case 2:
+                case 12:
                     joe.speak("And I work in a button factory");
                     break;
-                case 3: case 13:
+                case 3:
+                case 13:
                     joe.speak("One day my boss said to me");
                     aliveCharacters.add(purpleBastard.revive());
                     break;
-                case 4: case 14:
+                case 4:
+                case 14:
                     joe.shutIt();
                     purpleBastard.speak("\"Are you busy, Joe?\"");
                     break;
-                case 5: case 15:
+                case 5:
+                case 15:
                     purpleBastard.shutIt();
                     joe.speak("I said");
                     break;
-                case 6: case 16:
+                case 6:
+                case 16:
                     joe.speak("\"No.\"");
                     break;
                 case 7:
                     joe.shutIt();
                     purpleBastard.speak("\"Well then hit this button with your spacebar.\"");
-                    if (canWeSpawnAButton()){
+                    if (canWeSpawnAButton()) {
                         ButtonObject firstButton = buttonStack.pop().revive(
-                                new Vector2D(HALF_WIDTH,HALF_HEIGHT-50),
+                                new Vector2D(HALF_WIDTH, HALF_HEIGHT - 50),
                                 new Vector2D(),
                                 30
                         );
@@ -373,16 +383,14 @@ public class Game extends Model{
         }
     }
 
-    private boolean cutsceneTimerCheck(){
-        if (cutsceneTimer == 0){
+    private boolean cutsceneTimerCheck() {
+        if (cutsceneTimer == 0) {
             cutsceneTimer = CUTSCENE_STATE_LENGTH;
             return true;
-        } else{
+        } else {
             cutsceneTimer--;
             return false;
         }
     }
-
-
 
 }

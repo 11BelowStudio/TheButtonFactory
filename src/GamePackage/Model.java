@@ -5,6 +5,7 @@ import utilities.HighScoreHandler;
 import utilities.Vector2D;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -30,7 +31,7 @@ public abstract class Model {
 
 
     Color backgroundColor;
-    Rectangle backgroundRect = new Rectangle(0,0,GAME_WIDTH, GAME_HEIGHT);
+    Rectangle backgroundRect;
 
     boolean gameOver;
 
@@ -59,8 +60,12 @@ public abstract class Model {
     static Color W3_MIDNIGHT = new Color(41, 55, 75);
 
 
+    Vector2D topLeftCorner;
+
 
     public Model(Controller ctrl, HighScoreHandler hs){
+
+        topLeftCorner = new Vector2D(0,0);
 
         hudObjects = new ArrayList<>();
         characterObjects = new ArrayList<>();
@@ -74,6 +79,7 @@ public abstract class Model {
 
         ripples = new Stack<>();
 
+        backgroundRect = new Rectangle(0,0,GAME_WIDTH, GAME_HEIGHT);
 
         gameOver = false;
         stopThat = false;
@@ -83,9 +89,18 @@ public abstract class Model {
     }
 
     public void draw(Graphics2D g){
+        backgroundRect = new Rectangle(0,0,GAME_WIDTH, GAME_HEIGHT);
+        GameObject.UPDATE_X_Y_BOUNDS();
+
         g.setColor(backgroundColor);
         g.fill(backgroundRect);
+
+        AffineTransform backup = g.getTransform();
+
+
         synchronized (Model.class) {
+
+            g.translate(topLeftCorner.x,topLeftCorner.y);
 
             for (GameObject o: backgroundObjects){
                 o.draw(g);
@@ -104,10 +119,14 @@ public abstract class Model {
                 //and then the HUD (so its displayed above the game objects)
             }
         }
+
+        g.setTransform(backup);
     }
 
     void refreshLists(){
         synchronized (Model.class) {
+            topLeftCorner.add(ctrl.action.xScroll,ctrl.action.yScroll);
+
             backgroundObjects.clear();
             backgroundObjects.addAll(aliveBackground);
 
@@ -138,6 +157,7 @@ public abstract class Model {
     abstract void stopModelMusic();
 
     public Model revive(){
+        topLeftCorner = new Vector2D(0,0);
         this.gameOver = false;
         this.stopThat = false;
         setupModel();
@@ -171,6 +191,12 @@ public abstract class Model {
 
     boolean canWeSpawnARipple(){
         return (!ripples.isEmpty());
+    }
+
+    public void updateBackgroundRectangle(){
+
+        backgroundRect = new Rectangle(0,0,GAME_WIDTH, GAME_HEIGHT);
+        GameObject.UPDATE_X_Y_BOUNDS();
     }
 
 }

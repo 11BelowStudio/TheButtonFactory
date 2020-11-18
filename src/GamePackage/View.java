@@ -27,7 +27,7 @@ public class View extends JComponent {
     View(){
 
         displayingModel = false;
-
+        this.setPreferredSize(Constants.DEFAULT_DIMENSION);
 
     }
 
@@ -40,9 +40,19 @@ public class View extends JComponent {
 
     @Override
     public void paintComponent(Graphics g0) {
+
+
         Graphics2D g = (Graphics2D) g0;
         AffineTransform initialTransform = g.getTransform();
 
+        int width = getWidth();
+        int height = getHeight();
+        //g.setColor(Color.CYAN);
+
+        //g.fillRect(0,0, width ,height);
+
+        //Scaling the view so it's scaled according to the preferredSize of it
+        g.scale(width / getPreferredSize().getWidth(), height /getPreferredSize().getHeight());
 
 
         if (displayingModel) {
@@ -55,7 +65,21 @@ public class View extends JComponent {
         revalidate();
     }
 
+    //@Override
+    //public Dimension getPreferredSize() { return Constants.DEFAULT_DIMENSION; }
+
     @Override
-    public Dimension getPreferredSize() { return Constants.DEFAULT_DIMENSION; }
+    public void setSize(Dimension d){
+        super.setSize(d);
+        //this.setPreferredSize(d);
+        /*
+        Constants.GAME_HEIGHT = this.getHeight();
+        Constants.GAME_WIDTH = this.getWidth();
+        if (displayingModel) {
+            model.updateBackgroundRectangle();
+        }
+        */
+        System.out.println(this.getSize().toString());
+    }
 
 }

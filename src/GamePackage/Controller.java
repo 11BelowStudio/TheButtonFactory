@@ -42,6 +42,18 @@ public class Controller implements KeyListener, MouseListener {
             case KeyEvent.VK_SPACE:
                 action.space = true;
                 break;
+            case KeyEvent.VK_W:
+                action.yScroll = -1;
+                break;
+            case KeyEvent.VK_S:
+                action.yScroll = 1;
+                break;
+            case KeyEvent.VK_A:
+                action.xScroll = -1;
+                break;
+            case KeyEvent.VK_D:
+                action.xScroll = 1;
+                break;
         }
     }
 
@@ -60,6 +72,14 @@ public class Controller implements KeyListener, MouseListener {
                 break;
             case KeyEvent.VK_SPACE:
                 action.space = false;
+                break;
+            case KeyEvent.VK_W:
+            case KeyEvent.VK_S:
+                action.yScroll = 0;
+                break;
+            case KeyEvent.VK_A:
+            case KeyEvent.VK_D:
+                action.xScroll = 0;
                 break;
         }
     }

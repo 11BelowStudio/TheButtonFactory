@@ -28,8 +28,13 @@ public abstract class GameObject {
     int radius;
 
     static final int OBJ_RADIUS = 30;
-    static final int OBJ_X_BOUNDS = Constants.GAME_WIDTH - OBJ_RADIUS;
-    static final int OBJ_Y_BOUNDS = Constants.GAME_HEIGHT - OBJ_RADIUS;
+    static int OBJ_X_BOUNDS = Constants.GAME_WIDTH - OBJ_RADIUS;
+    static int OBJ_Y_BOUNDS = Constants.GAME_HEIGHT - OBJ_RADIUS;
+
+    public static void UPDATE_X_Y_BOUNDS(){
+        OBJ_X_BOUNDS = Constants.GAME_WIDTH - OBJ_RADIUS;
+        OBJ_Y_BOUNDS = Constants.GAME_HEIGHT - OBJ_RADIUS;
+    }
 
     static final int BUTTON_MAX_SPEED = 300;
 
